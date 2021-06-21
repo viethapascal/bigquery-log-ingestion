@@ -1,0 +1,1071 @@
+{
+    "index_patterns": [
+        "auditlog*"
+    ],
+    "version": 50001,
+
+    "template": {
+        "settings": {
+            "index.refresh_interval": "5s",
+            "number_of_shards": 2,
+            "blocks": {
+                    "read_only_allow_delete": "false"
+            }
+        },
+        "mappings": {
+            "properties": {
+                "@timestamp": {
+                    "type": "date"
+                },
+                "@version": {
+                    "type": "keyword"
+                },
+                "geoip": {
+                    "dynamic": "true",
+                    "properties": {
+                        "ip": {
+                            "type": "ip"
+                        },
+                        "latitude": {
+                            "type": "half_float"
+                        },
+                        "location": {
+                            "type": "geo_point"
+                        },
+                        "longitude": {
+                            "type": "half_float"
+                        }
+                    }
+                },
+                "insertId": {
+                    "type": "text",
+                    "fields": {
+                        "keyword": {
+                            "type": "keyword",
+                            "ignore_above": 256
+                        }
+                    },
+                    "norms": false
+                },
+                "logName": {
+                    "type": "text",
+                    "fields": {
+                        "keyword": {
+                            "type": "keyword",
+                            "ignore_above": 256
+                        }
+                    },
+                    "norms": false
+                },
+                "message": {
+                    "type": "text",
+                    "norms": false
+                },
+                "operation": {
+                    "properties": {
+                        "first": {
+                            "type": "boolean"
+                        },
+                        "id": {
+                            "type": "text",
+                            "fields": {
+                                "keyword": {
+                                    "type": "keyword",
+                                    "ignore_above": 256
+                                }
+                            },
+                            "norms": false
+                        },
+                        "last": {
+                            "type": "boolean"
+                        },
+                        "producer": {
+                            "type": "text",
+                            "fields": {
+                                "keyword": {
+                                    "type": "keyword",
+                                    "ignore_above": 256
+                                }
+                            },
+                            "norms": false
+                        }
+                    }
+                },
+                "protoPayload": {
+                    "properties": {
+                        "@type": {
+                            "type": "text",
+                            "fields": {
+                                "keyword": {
+                                    "type": "keyword",
+                                    "ignore_above": 256
+                                }
+                            },
+                            "norms": false
+                        },
+                        "authenticationInfo": {
+                            "properties": {
+                                "principalEmail": {
+                                    "type": "text",
+                                    "fields": {
+                                        "keyword": {
+                                            "type": "keyword",
+                                            "ignore_above": 256
+                                        }
+                                    },
+                                    "norms": false
+                                },
+                                "serviceAccountKeyName": {
+                                    "type": "text",
+                                    "fields": {
+                                        "keyword": {
+                                            "type": "keyword",
+                                            "ignore_above": 256
+                                        }
+                                    },
+                                    "norms": false
+                                }
+                            }
+                        },
+                        "authorizationInfo": {
+                            "properties": {
+                                "granted": {
+                                    "type": "boolean"
+                                },
+                                "permission": {
+                                    "type": "text",
+                                    "fields": {
+                                        "keyword": {
+                                            "type": "keyword",
+                                            "ignore_above": 256
+                                        }
+                                    },
+                                    "norms": false
+                                },
+                                "resource": {
+                                    "type": "text",
+                                    "fields": {
+                                        "keyword": {
+                                            "type": "keyword",
+                                            "ignore_above": 256
+                                        }
+                                    },
+                                    "norms": false
+                                },
+                                "resourceAttributes": {
+                                    "type": "object"
+                                }
+                            }
+                        },
+                        "metadata": {
+                            "properties": {
+                                "@type": {
+                                    "type": "text",
+                                    "fields": {
+                                        "keyword": {
+                                            "type": "keyword",
+                                            "ignore_above": 256
+                                        }
+                                    },
+                                    "norms": false
+                                },
+                                "jobChange": {
+                                    "properties": {
+                                        "after": {
+                                            "type": "text",
+                                            "fields": {
+                                                "keyword": {
+                                                    "type": "keyword",
+                                                    "ignore_above": 256
+                                                }
+                                            },
+                                            "norms": false
+                                        },
+                                        "job": {
+                                            "properties": {
+                                                "jobConfig": {
+                                                    "properties": {
+                                                        "loadConfig": {
+                                                            "properties": {
+                                                                "createDisposition": {
+                                                                    "type": "text",
+                                                                    "fields": {
+                                                                        "keyword": {
+                                                                            "type": "keyword",
+                                                                            "ignore_above": 256
+                                                                        }
+                                                                    },
+                                                                    "norms": false
+                                                                },
+                                                                "destinationTable": {
+                                                                    "type": "text",
+                                                                    "fields": {
+                                                                        "keyword": {
+                                                                            "type": "keyword",
+                                                                            "ignore_above": 256
+                                                                        }
+                                                                    },
+                                                                    "norms": false
+                                                                },
+                                                                "schemaJson": {
+                                                                    "type": "text",
+                                                                    "fields": {
+                                                                        "keyword": {
+                                                                            "type": "keyword",
+                                                                            "ignore_above": 256
+                                                                        }
+                                                                    },
+                                                                    "norms": false
+                                                                },
+                                                                "writeDisposition": {
+                                                                    "type": "text",
+                                                                    "fields": {
+                                                                        "keyword": {
+                                                                            "type": "keyword",
+                                                                            "ignore_above": 256
+                                                                        }
+                                                                    },
+                                                                    "norms": false
+                                                                }
+                                                            }
+                                                        },
+                                                        "queryConfig": {
+                                                            "properties": {
+                                                                "createDisposition": {
+                                                                    "type": "text",
+                                                                    "fields": {
+                                                                        "keyword": {
+                                                                            "type": "keyword",
+                                                                            "ignore_above": 256
+                                                                        }
+                                                                    },
+                                                                    "norms": false
+                                                                },
+                                                                "destinationTable": {
+                                                                    "type": "text",
+                                                                    "fields": {
+                                                                        "keyword": {
+                                                                            "type": "keyword",
+                                                                            "ignore_above": 256
+                                                                        }
+                                                                    },
+                                                                    "norms": false
+                                                                },
+                                                                "priority": {
+                                                                    "type": "text",
+                                                                    "fields": {
+                                                                        "keyword": {
+                                                                            "type": "keyword",
+                                                                            "ignore_above": 256
+                                                                        }
+                                                                    },
+                                                                    "norms": false
+                                                                },
+                                                                "query": {
+                                                                    "type": "text",
+                                                                    "fields": {
+                                                                        "keyword": {
+                                                                            "type": "keyword",
+                                                                            "ignore_above": 256
+                                                                        }
+                                                                    },
+                                                                    "norms": false
+                                                                },
+                                                                "statementType": {
+                                                                    "type": "text",
+                                                                    "fields": {
+                                                                        "keyword": {
+                                                                            "type": "keyword",
+                                                                            "ignore_above": 256
+                                                                        }
+                                                                    },
+                                                                    "norms": false
+                                                                },
+                                                                "writeDisposition": {
+                                                                    "type": "text",
+                                                                    "fields": {
+                                                                        "keyword": {
+                                                                            "type": "keyword",
+                                                                            "ignore_above": 256
+                                                                        }
+                                                                    },
+                                                                    "norms": false
+                                                                }
+                                                            }
+                                                        },
+                                                        "type": {
+                                                            "type": "text",
+                                                            "fields": {
+                                                                "keyword": {
+                                                                    "type": "keyword",
+                                                                    "ignore_above": 256
+                                                                }
+                                                            },
+                                                            "norms": false
+                                                        }
+                                                    }
+                                                },
+                                                "jobName": {
+                                                    "type": "text",
+                                                    "fields": {
+                                                        "keyword": {
+                                                            "type": "keyword",
+                                                            "ignore_above": 256
+                                                        }
+                                                    },
+                                                    "norms": false
+                                                },
+                                                "jobStats": {
+                                                    "properties": {
+                                                        "createTime": {
+                                                            "type": "date"
+                                                        },
+                                                        "endTime": {
+                                                            "type": "date"
+                                                        },
+                                                        "loadStats": {
+                                                            "properties": {
+                                                                "totalOutputBytes": {
+                                                                    "type": "text",
+                                                                    "fields": {
+                                                                        "keyword": {
+                                                                            "type": "keyword",
+                                                                            "ignore_above": 256
+                                                                        }
+                                                                    },
+                                                                    "norms": false
+                                                                }
+                                                            }
+                                                        },
+                                                        "queryStats": {
+                                                            "properties": {
+                                                                "billingTier": {
+                                                                    "type": "long"
+                                                                },
+                                                                "outputRowCount": {
+                                                                    "type": "text",
+                                                                    "fields": {
+                                                                        "keyword": {
+                                                                            "type": "keyword",
+                                                                            "ignore_above": 256
+                                                                        }
+                                                                    },
+                                                                    "norms": false
+                                                                },
+                                                                "referencedTables": {
+                                                                    "type": "text",
+                                                                    "fields": {
+                                                                        "keyword": {
+                                                                            "type": "keyword",
+                                                                            "ignore_above": 256
+                                                                        }
+                                                                    },
+                                                                    "norms": false
+                                                                },
+                                                                "referencedViews": {
+                                                                    "type": "text",
+                                                                    "fields": {
+                                                                        "keyword": {
+                                                                            "type": "keyword",
+                                                                            "ignore_above": 256
+                                                                        }
+                                                                    },
+                                                                    "norms": false
+                                                                },
+                                                                "totalBilledBytes": {
+                                                                    "type": "text",
+                                                                    "fields": {
+                                                                        "keyword": {
+                                                                            "type": "long",
+                                                                            "null_value": "0"
+                                                                        }
+                                                                    },
+                                                                    "norms": false
+                                                                },
+                                                                "totalProcessedBytes": {
+                                                                    "type": "text",
+                                                                    "fields": {
+                                                                        "keyword": {
+                                                                            "type": "long",
+                                                                            "null_value": "0"
+                                                                        }
+                                                                    },
+                                                                    "norms": false
+                                                                }
+                                                            }
+                                                        },
+                                                        "reservationUsage": {
+                                                            "properties": {
+                                                                "name": {
+                                                                    "type": "text",
+                                                                    "fields": {
+                                                                        "keyword": {
+                                                                            "type": "keyword",
+                                                                            "ignore_above": 256
+                                                                        }
+                                                                    },
+                                                                    "norms": false
+                                                                },
+                                                                "slotMs": {
+                                                                    "type": "text",
+                                                                    "fields": {
+                                                                        "keyword": {
+                                                                            "type": "keyword",
+                                                                            "ignore_above": 256
+                                                                        }
+                                                                    },
+                                                                    "norms": false
+                                                                }
+                                                            }
+                                                        },
+                                                        "startTime": {
+                                                            "type": "date"
+                                                        },
+                                                        "totalSlotMs": {
+                                                            "type": "text",
+                                                            "fields": {
+                                                                "keyword": {
+                                                                    "type": "long"
+                                                                }
+                                                            },
+                                                            "norms": false
+                                                        }
+                                                    }
+                                                },
+                                                "jobStatus": {
+                                                    "properties": {
+                                                        "jobState": {
+                                                            "type": "text",
+                                                            "fields": {
+                                                                "keyword": {
+                                                                    "type": "keyword",
+                                                                    "ignore_above": 256
+                                                                }
+                                                            },
+                                                            "norms": false
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "jobInsertion": {
+                                    "properties": {
+                                        "job": {
+                                            "properties": {
+                                                "jobConfig": {
+                                                    "properties": {
+                                                        "loadConfig": {
+                                                            "properties": {
+                                                                "createDisposition": {
+                                                                    "type": "text",
+                                                                    "fields": {
+                                                                        "keyword": {
+                                                                            "type": "keyword",
+                                                                            "ignore_above": 256
+                                                                        }
+                                                                    },
+                                                                    "norms": false
+                                                                },
+                                                                "destinationTable": {
+                                                                    "type": "text",
+                                                                    "fields": {
+                                                                        "keyword": {
+                                                                            "type": "keyword",
+                                                                            "ignore_above": 256
+                                                                        }
+                                                                    },
+                                                                    "norms": false
+                                                                },
+                                                                "schemaJson": {
+                                                                    "type": "text",
+                                                                    "fields": {
+                                                                        "keyword": {
+                                                                            "type": "keyword",
+                                                                            "ignore_above": 256
+                                                                        }
+                                                                    },
+                                                                    "norms": false
+                                                                },
+                                                                "writeDisposition": {
+                                                                    "type": "text",
+                                                                    "fields": {
+                                                                        "keyword": {
+                                                                            "type": "keyword",
+                                                                            "ignore_above": 256
+                                                                        }
+                                                                    },
+                                                                    "norms": false
+                                                                }
+                                                            }
+                                                        },
+                                                        "queryConfig": {
+                                                            "properties": {
+                                                                "createDisposition": {
+                                                                    "type": "text",
+                                                                    "fields": {
+                                                                        "keyword": {
+                                                                            "type": "keyword",
+                                                                            "ignore_above": 256
+                                                                        }
+                                                                    },
+                                                                    "norms": false
+                                                                },
+                                                                "destinationTable": {
+                                                                    "type": "text",
+                                                                    "fields": {
+                                                                        "keyword": {
+                                                                            "type": "keyword",
+                                                                            "ignore_above": 256
+                                                                        }
+                                                                    },
+                                                                    "norms": false
+                                                                },
+                                                                "priority": {
+                                                                    "type": "text",
+                                                                    "fields": {
+                                                                        "keyword": {
+                                                                            "type": "keyword",
+                                                                            "ignore_above": 256
+                                                                        }
+                                                                    },
+                                                                    "norms": false
+                                                                },
+                                                                "query": {
+                                                                    "type": "text",
+                                                                    "fields": {
+                                                                        "keyword": {
+                                                                            "type": "keyword",
+                                                                            "ignore_above": 256
+                                                                        }
+                                                                    },
+                                                                    "norms": false
+                                                                },
+                                                                "statementType": {
+                                                                    "type": "text",
+                                                                    "fields": {
+                                                                        "keyword": {
+                                                                            "type": "keyword",
+                                                                            "ignore_above": 256
+                                                                        }
+                                                                    },
+                                                                    "norms": false
+                                                                },
+                                                                "writeDisposition": {
+                                                                    "type": "text",
+                                                                    "fields": {
+                                                                        "keyword": {
+                                                                            "type": "keyword",
+                                                                            "ignore_above": 256
+                                                                        }
+                                                                    },
+                                                                    "norms": false
+                                                                }
+                                                            }
+                                                        },
+                                                        "type": {
+                                                            "type": "text",
+                                                            "fields": {
+                                                                "keyword": {
+                                                                    "type": "keyword",
+                                                                    "ignore_above": 256
+                                                                }
+                                                            },
+                                                            "norms": false
+                                                        }
+                                                    }
+                                                },
+                                                "jobName": {
+                                                    "type": "text",
+                                                    "fields": {
+                                                        "keyword": {
+                                                            "type": "keyword",
+                                                            "ignore_above": 256
+                                                        }
+                                                    },
+                                                    "norms": false
+                                                },
+                                                "jobStats": {
+                                                    "properties": {
+                                                        "createTime": {
+                                                            "type": "date"
+                                                        },
+                                                        "endTime": {
+                                                            "type": "date"
+                                                        },
+                                                        "loadStats": {
+                                                            "type": "object"
+                                                        },
+                                                        "queryStats": {
+                                                            "properties": {
+                                                                "billingTier": {
+                                                                    "type": "long"
+                                                                },
+                                                                "outputRowCount": {
+                                                                    "type": "text",
+                                                                    "fields": {
+                                                                        "keyword": {
+                                                                            "type": "keyword",
+                                                                            "ignore_above": 256
+                                                                        }
+                                                                    },
+                                                                    "norms": false
+                                                                },
+                                                                "referencedTables": {
+                                                                    "type": "text",
+                                                                    "fields": {
+                                                                        "keyword": {
+                                                                            "type": "keyword",
+                                                                            "ignore_above": 256
+                                                                        }
+                                                                    },
+                                                                    "norms": false
+                                                                },
+                                                                "referencedViews": {
+                                                                    "type": "text",
+                                                                    "fields": {
+                                                                        "keyword": {
+                                                                            "type": "keyword",
+                                                                            "ignore_above": 256
+                                                                        }
+                                                                    },
+                                                                    "norms": false
+                                                                },
+                                                                "totalBilledBytes": {
+                                                                    "type": "text",
+                                                                    "fields": {
+                                                                        "keyword": {
+                                                                            "type": "keyword",
+                                                                            "ignore_above": 256
+                                                                        }
+                                                                    },
+                                                                    "norms": false
+                                                                },
+                                                                "totalProcessedBytes": {
+                                                                    "type": "text",
+                                                                    "fields": {
+                                                                        "keyword": {
+                                                                            "type": "keyword",
+                                                                            "ignore_above": 256
+                                                                        }
+                                                                    },
+                                                                    "norms": false
+                                                                }
+                                                            }
+                                                        },
+                                                        "startTime": {
+                                                            "type": "date"
+                                                        },
+                                                        "totalSlotMs": {
+                                                            "type": "text",
+                                                            "fields": {
+                                                                "keyword": {
+                                                                    "type": "keyword",
+                                                                    "ignore_above": 256
+                                                                }
+                                                            },
+                                                            "norms": false
+                                                        }
+                                                    }
+                                                },
+                                                "jobStatus": {
+                                                    "properties": {
+                                                        "jobState": {
+                                                            "type": "text",
+                                                            "fields": {
+                                                                "keyword": {
+                                                                    "type": "keyword",
+                                                                    "ignore_above": 256
+                                                                }
+                                                            },
+                                                            "norms": false
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "reason": {
+                                            "type": "text",
+                                            "fields": {
+                                                "keyword": {
+                                                    "type": "keyword",
+                                                    "ignore_above": 256
+                                                }
+                                            },
+                                            "norms": false
+                                        }
+                                    }
+                                },
+                                "tableChange": {
+                                    "properties": {
+                                        "jobName": {
+                                            "type": "text",
+                                            "fields": {
+                                                "keyword": {
+                                                    "type": "keyword",
+                                                    "ignore_above": 256
+                                                }
+                                            },
+                                            "norms": false
+                                        },
+                                        "reason": {
+                                            "type": "text",
+                                            "fields": {
+                                                "keyword": {
+                                                    "type": "keyword",
+                                                    "ignore_above": 256
+                                                }
+                                            },
+                                            "norms": false
+                                        },
+                                        "table": {
+                                            "properties": {
+                                                "createTime": {
+                                                    "type": "date"
+                                                },
+                                                "schemaJson": {
+                                                    "type": "text",
+                                                    "fields": {
+                                                        "keyword": {
+                                                            "type": "keyword",
+                                                            "ignore_above": 256
+                                                        }
+                                                    },
+                                                    "norms": false
+                                                },
+                                                "tableName": {
+                                                    "type": "text",
+                                                    "fields": {
+                                                        "keyword": {
+                                                            "type": "keyword",
+                                                            "ignore_above": 256
+                                                        }
+                                                    },
+                                                    "norms": false
+                                                },
+                                                "truncateTime": {
+                                                    "type": "date"
+                                                },
+                                                "updateTime": {
+                                                    "type": "date"
+                                                }
+                                            }
+                                        },
+                                        "truncated": {
+                                            "type": "boolean"
+                                        }
+                                    }
+                                },
+                                "tableCreation": {
+                                    "properties": {
+                                        "jobName": {
+                                            "type": "text",
+                                            "fields": {
+                                                "keyword": {
+                                                    "type": "keyword",
+                                                    "ignore_above": 256
+                                                }
+                                            },
+                                            "norms": false
+                                        },
+                                        "reason": {
+                                            "type": "text",
+                                            "fields": {
+                                                "keyword": {
+                                                    "type": "keyword",
+                                                    "ignore_above": 256
+                                                }
+                                            },
+                                            "norms": false
+                                        },
+                                        "table": {
+                                            "properties": {
+                                                "schemaJson": {
+                                                    "type": "text",
+                                                    "fields": {
+                                                        "keyword": {
+                                                            "type": "keyword",
+                                                            "ignore_above": 256
+                                                        }
+                                                    },
+                                                    "norms": false
+                                                },
+                                                "tableName": {
+                                                    "type": "text",
+                                                    "fields": {
+                                                        "keyword": {
+                                                            "type": "keyword",
+                                                            "ignore_above": 256
+                                                        }
+                                                    },
+                                                    "norms": false
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "tableDataChange": {
+                                    "properties": {
+                                        "deletedRowsCount": {
+                                            "type": "text",
+                                            "fields": {
+                                                "keyword": {
+                                                    "type": "keyword",
+                                                    "ignore_above": 256
+                                                }
+                                            },
+                                            "norms": false
+                                        },
+                                        "insertedRowsCount": {
+                                            "type": "text",
+                                            "fields": {
+                                                "keyword": {
+                                                    "type": "keyword",
+                                                    "ignore_above": 256
+                                                }
+                                            },
+                                            "norms": false
+                                        },
+                                        "jobName": {
+                                            "type": "text",
+                                            "fields": {
+                                                "keyword": {
+                                                    "type": "keyword",
+                                                    "ignore_above": 256
+                                                }
+                                            },
+                                            "norms": false
+                                        },
+                                        "reason": {
+                                            "type": "text",
+                                            "fields": {
+                                                "keyword": {
+                                                    "type": "keyword",
+                                                    "ignore_above": 256
+                                                }
+                                            },
+                                            "norms": false
+                                        },
+                                        "truncated": {
+                                            "type": "boolean"
+                                        }
+                                    }
+                                },
+                                "tableDataRead": {
+                                    "properties": {
+                                        "fields": {
+                                            "type": "text",
+                                            "fields": {
+                                                "keyword": {
+                                                    "type": "keyword",
+                                                    "ignore_above": 256
+                                                }
+                                            },
+                                            "norms": false
+                                        },
+                                        "jobName": {
+                                            "type": "text",
+                                            "fields": {
+                                                "keyword": {
+                                                    "type": "keyword",
+                                                    "ignore_above": 256
+                                                }
+                                            },
+                                            "norms": false
+                                        },
+                                        "reason": {
+                                            "type": "text",
+                                            "fields": {
+                                                "keyword": {
+                                                    "type": "keyword",
+                                                    "ignore_above": 256
+                                                }
+                                            },
+                                            "norms": false
+                                        }
+                                    }
+                                },
+                                "tableDeletion": {
+                                    "properties": {
+                                        "reason": {
+                                            "type": "text",
+                                            "fields": {
+                                                "keyword": {
+                                                    "type": "keyword",
+                                                    "ignore_above": 256
+                                                }
+                                            },
+                                            "norms": false
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "methodName": {
+                            "type": "text",
+                            "fields": {
+                                "keyword": {
+                                    "type": "keyword",
+                                    "ignore_above": 256
+                                }
+                            },
+                            "norms": false
+                        },
+                        "requestMetadata": {
+                            "properties": {
+                                "callerIp": {
+                                    "type": "text",
+                                    "fields": {
+                                        "keyword": {
+                                            "type": "keyword",
+                                            "ignore_above": 256
+                                        }
+                                    },
+                                    "norms": false
+                                },
+                                "callerNetwork": {
+                                    "type": "text",
+                                    "fields": {
+                                        "keyword": {
+                                            "type": "keyword",
+                                            "ignore_above": 256
+                                        }
+                                    },
+                                    "norms": false
+                                },
+                                "callerSuppliedUserAgent": {
+                                    "type": "text",
+                                    "fields": {
+                                        "keyword": {
+                                            "type": "keyword",
+                                            "ignore_above": 256
+                                        }
+                                    },
+                                    "norms": false
+                                },
+                                "destinationAttributes": {
+                                    "type": "object"
+                                },
+                                "requestAttributes": {
+                                    "type": "object"
+                                }
+                            }
+                        },
+                        "resourceName": {
+                            "type": "text",
+                            "fields": {
+                                "keyword": {
+                                    "type": "keyword",
+                                    "ignore_above": 256
+                                }
+                            },
+                            "norms": false
+                        },
+                        "serviceName": {
+                            "type": "text",
+                            "fields": {
+                                "keyword": {
+                                    "type": "keyword",
+                                    "ignore_above": 256
+                                }
+                            },
+                            "norms": false
+                        },
+                        "status": {
+                            "properties": {
+                                "code": {
+                                    "type": "long"
+                                },
+                                "message": {
+                                    "type": "text",
+                                    "fields": {
+                                        "keyword": {
+                                            "type": "keyword",
+                                            "ignore_above": 256
+                                        }
+                                    },
+                                    "norms": false
+                                }
+                            }
+                        }
+                    }
+                },
+                "receiveTimestamp": {
+                    "type": "date"
+                },
+                "resource": {
+                    "properties": {
+                        "labels": {
+                            "properties": {
+                                "dataset_id": {
+                                    "type": "text",
+                                    "fields": {
+                                        "keyword": {
+                                            "type": "keyword",
+                                            "ignore_above": 256
+                                        }
+                                    },
+                                    "norms": false
+                                },
+                                "location": {
+                                    "type": "text",
+                                    "fields": {
+                                        "keyword": {
+                                            "type": "keyword",
+                                            "ignore_above": 256
+                                        }
+                                    },
+                                    "norms": false
+                                },
+                                "project_id": {
+                                    "type": "text",
+                                    "fields": {
+                                        "keyword": {
+                                            "type": "keyword",
+                                            "ignore_above": 256
+                                        }
+                                    },
+                                    "norms": false
+                                }
+                            }
+                        },
+                        "type": {
+                            "type": "text",
+                            "fields": {
+                                "keyword": {
+                                    "type": "keyword",
+                                    "ignore_above": 256
+                                }
+                            },
+                            "norms": false
+                        }
+                    }
+                },
+                "severity": {
+                    "type": "text",
+                    "fields": {
+                        "keyword": {
+                            "type": "keyword",
+                            "ignore_above": 256
+                        }
+                    },
+                    "norms": false
+                },
+                "timestamp": {
+                    "type": "date"
+                },
+                "type": {
+                    "type": "text",
+                    "fields": {
+                        "keyword": {
+                            "type": "keyword",
+                            "ignore_above": 256
+                        }
+                    },
+                    "norms": false
+                }
+            }
+        }
+    }
+}

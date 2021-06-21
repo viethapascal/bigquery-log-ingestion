@@ -1,0 +1,39 @@
+version: '3.6'
+services:
+  grafana:
+    image: grafana/grafana
+    ports:
+      - 3000:3000
+    networks:
+      - elastic
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.10.2
+    environment:
+      - discovery.type=single-node
+    volumes:
+      - ./elasticsearch/data:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+    networks:
+      - elastic
+    healthcheck:
+      test: ["CMD", "curl", "-f", "localhost:9200/_cat/health?pretty"]
+
+  logstash:
+#    depends_on:
+#      - elasticsearch
+    image: logstash:dev
+    build:
+      context: ./logstash
+      dockerfile: Dockerfile
+    volumes:
+      - ./logstash/config:/usr/share/logstash/config
+      - ./logstash/pipeline:/usr/share/logstash/pipeline
+      - ./logstash/index_template:/usr/share/index_template
+    ports:
+      - 9600:9600
+    networks:
+      - elastic
+networks:
+  elastic:
+    driver: bridge
